@@ -59,16 +59,48 @@ public class BattleServiceImpl implements BattleService {
                     if(attack.get().getDamage() > 0) {
                         attackCount = getAttackCount(attack.get());
                         damage = formulas.calculateDamage(attack.get(), battle.getUsersPokemon(), battle.getEnemyPokemon(), battle.getWeather(), critModif);
-                    }
-                    if(critModif > 1)
-                        System.out.println("Критический удар!");
+                        if(attackCount == 1)
+                            doDamage(damage, battle);
+                        else for(int i = 0; i<attackCount; i++)
+                            doDamage(damage, battle);
+                        if(critModif > 1)
+                            System.out.println("Критический удар!");
+                        }
+                    else doDamage(calcDamageForOtherAttack(attack.get(), battle), battle);
+
                 }
         }
         return null;
     }
 
+    private void doDamage(int damage, Battle battle){
+        if(isHitTarget())
+            battle.getEnemyPokemon().setCurrentHP(battle.getEnemyPokemon().getCurrentHP() - damage);
+        else System.out.println("Attack missed");
+    }
+
+    private boolean isHitTarget(){
+        return true;
+    }
+
+    private int calcDamageForOtherAttack(Attack attack, Battle battle){
+        switch(attack.getName()) {
+            case "Guillotine":
+                int acc = ((battle.getUsersPokemon().getLevel() - battle.getEnemyPokemon().getLevel()) + 30);
+                attack.setAccuracy(acc);
+                return battle.getEnemyPokemon().getStats().getHP();
+            case "Swords Dance":
+                battle.getUsersPokemon().getStats().setAttackStatus(2);
+            case "Bind":
+                battle.getEnemyPokemon().setStatusCondition(StatusCondition.BOUND);
+
+
+        }
+        return 1;
+    }
+
     public int getAttackCount(Attack attack){
-        if(attack.getName().equals("Double Slap")) {
+        if(attack.getName().equals("Double Slap") || attack.getName().equals("Comet Punch") || attack.getName().equals("Bind")) {
             int randomValue = randomValue(0, 100);
             if (randomValue <= 33.3F)
                 return 2;
@@ -83,22 +115,27 @@ public class BattleServiceImpl implements BattleService {
 
     public   Battle setStatus(String attackName, Battle battle){
         int randomValue = randomValue(0, 100);
-        switch (attackName) {
-            case ("Thunder Punch"):
-                //if (randomValue(0, 100) <= 10) {
+        if (randomValue <= 10) {
+            switch (attackName) {
+                case ("Thunder Punch"):
                     battle.getEnemyPokemon().setStatusCondition(StatusCondition.PARALYSIS);
                     return battle;
-                //}
-            case ("Ice Punch"):
-                if (randomValue <= 10) {
-                    battle.getEnemyPokemon().setStatusCondition(StatusCondition.FREEZE);
+                case ("Ice Punch"):
+                        battle.getEnemyPokemon().setStatusCondition(StatusCondition.FREEZE);
+                        return battle;
+
+                case ("Fire Punch"):
+                        battle.getEnemyPokemon().setStatusCondition(StatusCondition.BURN);
+                        return battle;
+            }
+        }
+
+        if(randomValue <= 30){
+            switch (attackName) {
+                case ("Stomp"):
+                    battle.getEnemyPokemon().setStatusCondition(StatusCondition.FLINCH);
                     return battle;
-                }
-            case ("Fire Punch"):
-                if (randomValue <= 10) {
-                    battle.getEnemyPokemon().setStatusCondition(StatusCondition.BURN);
-                    return battle;
-                }
+            }
         }
 
 

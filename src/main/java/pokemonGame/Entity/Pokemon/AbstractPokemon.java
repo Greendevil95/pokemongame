@@ -36,25 +36,11 @@ public abstract class AbstractPokemon extends AbstractEntity {
     @Column
     private String name;
 
-    @Column
-    private Integer attack;
+    @Embedded
+    private Stats stats;
 
     @Column
-    private Integer defense;
-
-    @Column
-    private Integer HP;
-
-    @Column
-    private Integer speed;
-
-    @Column
-    private Integer specDefence;
-
-    @Column
-    private Integer specAttack;
-
-    @Column
+    //@Transient
     private Integer level;
 
     @Column
@@ -72,54 +58,6 @@ public abstract class AbstractPokemon extends AbstractEntity {
 
     @Column
     private boolean shiny;
-
-    public int getAttack() {
-        return attack;
-    }
-
-    public void setAttack(int attack) {
-        this.attack = attack;
-    }
-
-    public int getDefense() {
-        return defense;
-    }
-
-    public void setDefense(int defense) {
-        this.defense = defense;
-    }
-
-    public int getHP() {
-        return HP;
-    }
-
-    public void setHP(int HP) {
-        this.HP = HP;
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    public int getSpecDefence() {
-        return specDefence;
-    }
-
-    public void setSpecDefence(int specDefence) {
-        this.specDefence = specDefence;
-    }
-
-    public int getSpecAttack() {
-        return specAttack;
-    }
-
-    public void setSpecAttack(int specAttack) {
-        this.specAttack = specAttack;
-    }
 
     public PokemonInDex getPokemonInDex() {
         return pokemonInDex;
@@ -169,30 +107,6 @@ public abstract class AbstractPokemon extends AbstractEntity {
         this.name = name;
     }
 
-    public void setAttack(Integer attack) {
-        this.attack = attack;
-    }
-
-    public void setDefense(Integer defense) {
-        this.defense = defense;
-    }
-
-    public void setHP(Integer HP) {
-        this.HP = HP;
-    }
-
-    public void setSpeed(Integer speed) {
-        this.speed = speed;
-    }
-
-    public void setSpecDefence(Integer specDefence) {
-        this.specDefence = specDefence;
-    }
-
-    public void setSpecAttack(Integer specAttack) {
-        this.specAttack = specAttack;
-    }
-
     public Integer getLevel() {
         return level;
     }
@@ -239,6 +153,14 @@ public abstract class AbstractPokemon extends AbstractEntity {
 
     public void setShiny(boolean shiny) {
         this.shiny = shiny;
+    }
+
+    public Stats getStats() {
+        return stats;
+    }
+
+    public void setStats(Stats stats) {
+        this.stats = stats;
     }
 }
 

@@ -13,8 +13,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "pokemon")
+//@AttributeOverride(name = "level", column = @Column(name = "level"))
 public class Pokemon extends AbstractPokemon {
-
 
     @Column
     private  Integer Happiness;
@@ -51,69 +51,20 @@ public class Pokemon extends AbstractPokemon {
     @JoinColumn(name = "pokemon_id")
     private Item ball;
 
+
     public Pokemon() {
     }
 
-
-    public int getHappiness() {
+    public Integer getHappiness() {
         return Happiness;
-    }
-
-    public void setHappiness(int happiness) {
-        Happiness = happiness;
-    }
-
-
-    public int getFreeEV() {
-        return freeEV;
-    }
-
-    public void setFreeEV(int freeEV) {
-        this.freeEV = freeEV;
-    }
-
-    public String getCatcher() {
-        return Catcher;
-    }
-
-    public void setCatcher(String catcher) {
-        Catcher = catcher;
-    }
-
-    public int getExpirience() {
-        return Expirience;
-    }
-
-    public void setExpirience(int expirience) {
-        Expirience = expirience;
-    }
-
-    public int getTotalExpirience() {
-        return totalExpirience;
-    }
-
-    public void setTotalExpirience(int totalExpirience) {
-        this.totalExpirience = totalExpirience;
-    }
-
-    public int getExpToLvl() {
-        return expToLvl;
-    }
-
-    public void setExpToLvl(int expToLvl) {
-        this.expToLvl = expToLvl;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public void setHappiness(Integer happiness) {
         Happiness = happiness;
+    }
+
+    public Integer getFreeEV() {
+        return freeEV;
     }
 
     public void setFreeEV(Integer freeEV) {
@@ -128,16 +79,44 @@ public class Pokemon extends AbstractPokemon {
         this.reserveAttackMoves = reserveAttackMoves;
     }
 
+    public String getCatcher() {
+        return Catcher;
+    }
+
+    public void setCatcher(String catcher) {
+        Catcher = catcher;
+    }
+
+    public Integer getExpirience() {
+        return Expirience;
+    }
+
     public void setExpirience(Integer expirience) {
         Expirience = expirience;
+    }
+
+    public Integer getTotalExpirience() {
+        return totalExpirience;
     }
 
     public void setTotalExpirience(Integer totalExpirience) {
         this.totalExpirience = totalExpirience;
     }
 
+    public Integer getExpToLvl() {
+        return expToLvl;
+    }
+
     public void setExpToLvl(Integer expToLvl) {
         this.expToLvl = expToLvl;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public boolean isTradable() {

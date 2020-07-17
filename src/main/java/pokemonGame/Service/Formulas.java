@@ -62,11 +62,11 @@ public class Formulas {
         int pokemonDefence;
 
         if (attack.getAttackType() == AttackType.PHYSICAL) {
-            pokemonAttack = pokemon.getAttack();
-            pokemonDefence = enemyPokemon.getDefense();
+            pokemonAttack = pokemon.getStats().getAttack();
+            pokemonDefence = enemyPokemon.getStats().getDefense();
         } else {
-            pokemonAttack = pokemon.getSpecAttack();
-            pokemonDefence = enemyPokemon.getSpecDefence();
+            pokemonAttack = pokemon.getStats().getSpecAttack();
+            pokemonDefence = enemyPokemon.getStats().getSpecDefence();
         }
 
 
@@ -320,7 +320,7 @@ public class Formulas {
 
         //int catchRateModif = (int) ((catchRate * getBallRate(pokeball, wildPokemon, userPokemon, battle, user) * getStatusModif(wildPokemon)) * (wildPokemon.getHP() / wildPokemon.getCurrentHP())) / 255;
 
-        int catchRateModif = (int) ((((3 * wildPokemon.getHP() - 2 * wildPokemon.getCurrentHP()) * catchRate * getBallRate(pokeball, wildPokemon, userPokemon, battle, user))/(3*wildPokemon.getHP()))*getStatusModif(wildPokemon)) + psevdRandCount;
+        int catchRateModif = (int) ((((3 * wildPokemon.getStats().getHP() - 2 * wildPokemon.getCurrentHP()) * catchRate * getBallRate(pokeball, wildPokemon, userPokemon, battle, user))/(3*wildPokemon.getStats().getHP()))*getStatusModif(wildPokemon)) + psevdRandCount;
 
         System.out.println("catchRate = " + catchRateModif);
         System.out.println(randomValue);
@@ -345,7 +345,7 @@ public class Formulas {
                 case ("Master Ball"):
                     return 255;
                 case ("Fast Ball"):
-                    if (wildPokemon.getSpeed() > 100)
+                    if (wildPokemon.getStats().getSpeed() > 100)
                         return 4;
                     else return 1;
                 case ("Level Ball"):

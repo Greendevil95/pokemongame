@@ -11,7 +11,6 @@ import java.util.List;
 @Entity
 public class WildPokemon extends AbstractPokemon {
 
-
     @Column
     private int maxLevel;
 
@@ -27,10 +26,15 @@ public class WildPokemon extends AbstractPokemon {
     @ManyToOne
     private Location location;
 
+    @Override
     public Integer getLevel() {
-        maxLevel -= minLevel;
-        return (int) (Math.random() * ++maxLevel) + minLevel;
+        if(super.getLevel() == null) {
+            maxLevel -= minLevel;
+            return (int) (Math.random() * ++maxLevel) + minLevel;
+        }
+        else return  super.getLevel();
     }
+
 
     public List<Item> getDrops() {
         return drops;
