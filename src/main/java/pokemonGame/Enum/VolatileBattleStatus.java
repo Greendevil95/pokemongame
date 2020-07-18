@@ -1,0 +1,18 @@
+package pokemonGame.Enum;
+
+public enum VolatileBattleStatus {
+    AQUARING,
+    BRACING,
+    CHARGINGTURN,
+    CENTEROFATTENTION,
+    DEFENSECURL,
+    ROOTING,
+    MAGNETICLEVITATION,
+    MINIMIZE,
+    PROTECTION,
+    RECHARGING,
+    SEMIINVULNERABLE,
+    SUBSTITUTE,
+    TAKINGAIM,
+    WITHDRAWING
+}

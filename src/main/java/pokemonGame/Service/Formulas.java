@@ -62,17 +62,112 @@ public class Formulas {
         int pokemonDefence;
 
         if (attack.getAttackType() == AttackType.PHYSICAL) {
-            pokemonAttack = pokemon.getStats().getAttack();
-            pokemonDefence = enemyPokemon.getStats().getDefense();
+            pokemonAttack = pokemon.getStats().getAttack() * getStatModif(pokemon.getStats().getAttackStatus());
+            pokemonDefence = enemyPokemon.getStats().getDefense() * getStatModif(pokemon.getStats().getDefenseStatus());
         } else {
-            pokemonAttack = pokemon.getStats().getSpecAttack();
-            pokemonDefence = enemyPokemon.getStats().getSpecDefence();
+            pokemonAttack = pokemon.getStats().getSpecAttack() * getStatModif(pokemon.getStats().getSpecAttackStatus());
+            pokemonDefence = enemyPokemon.getStats().getSpecDefence() * getStatModif(pokemon.getStats().getSpecDefenceStatus());
         }
 
 
         double modifier = (int) Math.floor(getWatherModif(weather, attack) * randomValue * critModif * getStabModif(attack, pokemon) * getBurnModif(pokemon, attack)) * getTypeModif(attack, pokemon) * getOtherModif(attack, pokemon);
 
         return (int) Math.floor((((((((float) 2 * pokemon.getLevel()) / 5) + 2) * attack.getDamage() * pokemonAttack / pokemonDefence) / 50) + 2) * modifier);
+    }
+
+    public int getAccuracyModif(int modif){
+        switch (modif) {
+            case -6:
+                return 3 / 9;
+            case -5:
+                return 3 / 8;
+            case -4:
+                return 3 / 7;
+            case -3:
+                return 3 / 6;
+            case -2:
+                return 3 / 5;
+            case -1:
+                return 3 / 4;
+            case 1:
+                return 4 / 3;
+            case 2:
+                return 5 / 3;
+            case 3:
+                return 6 / 3;
+            case 4:
+                return 7 / 3;
+            case 5:
+                return 8 / 3;
+            case 6:
+                return 9 / 3;
+            default:
+                return 1;
+        }
+    }
+
+    public int getEvasionModif(int modif){
+        switch (modif) {
+            case 6:
+                return 3 / 9;
+            case 5:
+                return 3 / 8;
+            case 4:
+                return 3 / 7;
+            case 3:
+                return 3 / 6;
+            case 2:
+                return 3 / 5;
+            case 1:
+                return 3 / 4;
+            case -1:
+                return 4 / 3;
+            case -2:
+                return 5 / 3;
+            case -3:
+                return 6 / 3;
+            case -4:
+                return 7 / 3;
+            case- 5:
+                return 8 / 3;
+            case -6:
+                return 9 / 3;
+            default:
+                return 1;
+        }
+    }
+
+
+
+    private int getStatModif(int modifValue) {
+        switch (modifValue) {
+            case -6:
+                return 2 / 8;
+            case -5:
+                return 2 / 7;
+            case -4:
+                return 2 / 6;
+            case -3:
+                return 2 / 5;
+            case -2:
+                return 2 / 4;
+            case -1:
+                return 2 / 3;
+            case 1:
+                return 3 / 2;
+            case 2:
+                return 4 / 2;
+            case 3:
+                return 5 / 2;
+            case 4:
+                return 6 / 2;
+            case 5:
+                return 7 / 2;
+            case 6:
+                return 8 / 2;
+            default:
+                return 1;
+        }
     }
 
     private double getBurnModif(Pokemon pokemon, Attack attack) {
@@ -316,11 +411,11 @@ public class Formulas {
         if (catchRate < 0)
             catchRate = 1;
 
-        int randomValue = randomValue(0,255);
+        int randomValue = randomValue(0, 255);
 
         //int catchRateModif = (int) ((catchRate * getBallRate(pokeball, wildPokemon, userPokemon, battle, user) * getStatusModif(wildPokemon)) * (wildPokemon.getHP() / wildPokemon.getCurrentHP())) / 255;
 
-        int catchRateModif = (int) ((((3 * wildPokemon.getStats().getHP() - 2 * wildPokemon.getCurrentHP()) * catchRate * getBallRate(pokeball, wildPokemon, userPokemon, battle, user))/(3*wildPokemon.getStats().getHP()))*getStatusModif(wildPokemon)) + psevdRandCount;
+        int catchRateModif = (int) ((((3 * wildPokemon.getStats().getHP() - 2 * wildPokemon.getStats().getCurrentHP()) * catchRate * getBallRate(pokeball, wildPokemon, userPokemon, battle, user)) / (3 * wildPokemon.getStats().getHP())) * getStatusModif(wildPokemon)) + psevdRandCount;
 
         System.out.println("catchRate = " + catchRateModif);
         System.out.println(randomValue);
@@ -392,7 +487,7 @@ public class Formulas {
                         return 3.5F;
                     else return 1;
                 case ("Dusk Ball"):
-                    if (wildPokemon.getLocation().getLocationType().equals(LocationType.CAVE)|| Game.getTimesOfDay().equals(TimesOfDay.NIGHT))
+                    if (wildPokemon.getLocation().getLocationType().equals(LocationType.CAVE) || Game.getTimesOfDay().equals(TimesOfDay.NIGHT))
                         return 3.5F;
                     else return 1;
                 case ("Quick Ball"):
@@ -406,21 +501,20 @@ public class Formulas {
     }
 
     private float getStatusModif(WildPokemon wildPokemon) {
-        if(wildPokemon.getStatusCondition() == null)
+        if (wildPokemon.getStatusCondition() == null)
             return 1;
-            if(wildPokemon.getStatusCondition().equals(StatusCondition.POISON) || wildPokemon.getStatusCondition().equals(StatusCondition.BADLYPOISONED) || wildPokemon.getStatusCondition().equals(StatusCondition.BURN) || wildPokemon.getStatusCondition().equals(StatusCondition.PARALYSIS) )
-        return 1.5F;
-            else if(wildPokemon.getStatusCondition().equals(StatusCondition.FREEZE) || wildPokemon.getStatusCondition().equals(StatusCondition.SLEEP))
-                return 2;
-            else return 1;
+        if (wildPokemon.getStatusCondition().equals(StatusCondition.POISON) || wildPokemon.getStatusCondition().equals(StatusCondition.BADLYPOISONED) || wildPokemon.getStatusCondition().equals(StatusCondition.BURN) || wildPokemon.getStatusCondition().equals(StatusCondition.PARALYSIS))
+            return 1.5F;
+        else if (wildPokemon.getStatusCondition().equals(StatusCondition.FREEZE) || wildPokemon.getStatusCondition().equals(StatusCondition.SLEEP))
+            return 2;
+        else return 1;
     }
 
     public int getCatchChance() {
         return 1;
     }
 
-    public static int randomValue(int min, int max)
-    {
+    public static int randomValue(int min, int max) {
         max -= min;
         return (int) (Math.random() * ++max) + min;
     }

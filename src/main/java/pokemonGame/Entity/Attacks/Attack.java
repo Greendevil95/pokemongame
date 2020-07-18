@@ -22,13 +22,13 @@ public class Attack extends AbstractEntity{
     private Type type;
 
     @Column
-    private int damage;
+    private Integer damage;
 
     @Column(length = 100)
-    private int accuracy;
+    private Integer accuracy;
 
     @Column
-    private int PP;
+    private Integer PP;
 
     @Enumerated(EnumType.STRING)
     private AttackType attackType;
@@ -49,6 +49,9 @@ public class Attack extends AbstractEntity{
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pokemon_in_dex_id")
     private PokemonInDex pokemonInDex;
+
+    @Column
+    private boolean makesContact;
 
 
     public Attack(String name, Type type, int damage, int accuracy, int PP, AttackType attackType) {
@@ -79,7 +82,7 @@ public class Attack extends AbstractEntity{
         this.type = type;
     }
 
-    public int getDamage() {
+    public Integer getDamage() {
         return damage;
     }
 
@@ -87,7 +90,7 @@ public class Attack extends AbstractEntity{
         this.damage = damage;
     }
 
-    public int getAccuracy() {
+    public Integer getAccuracy() {
         return accuracy;
     }
 
@@ -111,13 +114,4 @@ public class Attack extends AbstractEntity{
         this.discription = discription;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
 }

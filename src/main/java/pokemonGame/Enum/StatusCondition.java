@@ -6,10 +6,5 @@ public enum StatusCondition {
     BURN,
     PARALYSIS,
     POISON,
-    BADLYPOISONED,
-    BOUND,
-    CONFUSED,
-    FLINCH,
-    INFATUATION,
-    LEECHSEED
+    BADLYPOISONED
 }

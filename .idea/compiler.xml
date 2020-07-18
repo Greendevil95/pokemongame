@@ -6,8 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="pokemon-game" />
         <module name="pokemongame" />
+        <module name="pokemon-game" />
       </profile>
     </annotationProcessing>
   </component>

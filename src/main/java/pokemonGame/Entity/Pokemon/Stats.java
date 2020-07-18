@@ -5,6 +5,10 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class Stats {
+
+    @Column
+    private int currentHP;
+
     @Column
     private Integer attack;
 
@@ -40,6 +44,12 @@ public class Stats {
 
     @Column
     private Integer specAttackStatus = 0;
+
+    @Column
+    private Integer accuracyStatus = 0;
+
+    @Column
+    private Integer evasionStatus = 0;
 
     public Integer getAttack() {
         return attack;
@@ -136,4 +146,107 @@ public class Stats {
     public void setSpecAttackStatus(Integer specAttackStatus) {
         this.specAttackStatus = specAttackStatus;
     }
+
+    public Integer getAccuracyStatus() {
+        return accuracyStatus;
+    }
+
+    public void setAccuracyStatus(Integer accuracyStatus) {
+        this.accuracyStatus = accuracyStatus;
+    }
+
+    public Integer getEvasionStatus() {
+        return evasionStatus;
+    }
+
+    public void setEvasionStatus(Integer evasionStatus) {
+        this.evasionStatus = evasionStatus;
+    }
+
+    public int getCurrentHP() {
+        return currentHP;
+    }
+
+    public void setCurrentHP(int currentHP) {
+        this.currentHP = currentHP;
+    }
+
+    public void increaseAttack(int value){
+        attackStatus += value;
+        attackStatus = check(attackStatus);
+    }
+
+    public void increaseDefence(int value){
+        defenseStatus += value;
+        defenseStatus  = check(defenseStatus );
+    }
+
+    public void increaseSpecAttack(int value){
+        specAttackStatus += value;
+        specAttackStatus = check(specAttackStatus);
+    }
+
+    public void increaseSpecDefence(int value){
+        specDefenceStatus += value;
+        specDefenceStatus = check(specDefenceStatus);
+    }
+
+    public void increaseSpeed(int value){
+        speedStatus += value;
+        speedStatus = check(speedStatus);
+    }
+
+    public void increaseAccurasy(int value){
+        accuracyStatus += value;
+        accuracyStatus = check(accuracyStatus);
+    }
+
+    public void increaseEvasion(int value){
+        evasionStatus += value;
+        evasionStatus = check(evasionStatus);
+    }
+
+    public void decreaseAttack(int value){
+        attackStatus -= value;
+        attackStatus = check(attackStatus);
+    }
+
+    public void decreaseDefence(int value){
+        defenseStatus -= value;
+        defenseStatus = check(defenseStatus);
+    }
+
+    public void decreaseSpecAttack(int value){
+        specAttackStatus -= value;
+        specAttackStatus = check(specAttackStatus);
+    }
+
+    public void decreaseSpecDefence(int value){
+        specDefenceStatus -= value;
+        specDefenceStatus = check(specDefenceStatus);
+    }
+
+    public void decreaseSpeed(int value){
+        speedStatus -= value;
+        speedStatus = check(speedStatus);
+    }
+
+    public void decreaseAccurasy(int value){
+        accuracyStatus -= value;
+        accuracyStatus = check(accuracyStatus);
+    }
+
+    public void decreaseEvasion(int value){
+        evasionStatus -= value;
+        evasionStatus = check(evasionStatus);
+    }
+
+    private int check(int value){
+        if (value >=6)
+            return 6;
+        if (value <=-6)
+            return -6;
+        else return value;
+    }
+
 }

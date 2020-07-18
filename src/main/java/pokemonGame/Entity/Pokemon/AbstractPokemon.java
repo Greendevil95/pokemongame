@@ -8,9 +8,12 @@ import pokemonGame.Entity.Pokedex.Ability;
 import pokemonGame.Entity.Pokedex.PokemonInDex;
 import pokemonGame.Enum.Gender;
 import pokemonGame.Enum.StatusCondition;
+import pokemonGame.Enum.VolatileBattleStatus;
+import pokemonGame.Enum.VolatileStatus;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @MappedSuperclass
 public abstract class AbstractPokemon extends AbstractEntity {
@@ -49,15 +52,22 @@ public abstract class AbstractPokemon extends AbstractEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pokemon")
     private List<PokemonAttack> attackMoves;
 
-    @Column
-    private int currentHP;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "nature_id")
     private Nature nature;
 
     @Column
     private boolean shiny;
+
+    @ElementCollection(targetClass = VolatileStatus.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "volatile_status", joinColumns = @JoinColumn(name = "pokemon_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<VolatileStatus> volatileStatusSet;
+
+    @ElementCollection(targetClass = VolatileBattleStatus.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "volatile_battle_status", joinColumns = @JoinColumn(name = "pokemon_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<VolatileBattleStatus> volatileBattleStatusSet;
 
     public PokemonInDex getPokemonInDex() {
         return pokemonInDex;
@@ -131,14 +141,6 @@ public abstract class AbstractPokemon extends AbstractEntity {
         this.attackMoves = attackMoves;
     }
 
-    public int getCurrentHP() {
-        return currentHP;
-    }
-
-    public void setCurrentHP(int currentHP) {
-        this.currentHP = currentHP;
-    }
-
     public Nature getNature() {
         return nature;
     }
@@ -162,5 +164,23 @@ public abstract class AbstractPokemon extends AbstractEntity {
     public void setStats(Stats stats) {
         this.stats = stats;
     }
+
+    public Set<VolatileStatus> getVolatileStatusSet() {
+        return volatileStatusSet;
+    }
+
+    public void setVolatileStatusSet(Set<VolatileStatus> volatileStatusSet) {
+        this.volatileStatusSet = volatileStatusSet;
+    }
+
+    public Set<VolatileBattleStatus> getVolatileBattleStatusSet() {
+        return volatileBattleStatusSet;
+    }
+
+    public void setVolatileBattleStatusSet(Set<VolatileBattleStatus> volatileBattleStatusSet) {
+        this.volatileBattleStatusSet = volatileBattleStatusSet;
+    }
+
+
 }
 
